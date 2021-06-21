@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "587486915073",
+    "project_id": "lexical-analyzer-32421",
+    "storage_bucket": "lexical-analyzer-32421.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:587486915073:android:67a2690ffd354120c4ae00",
+        "android_client_info": {
+          "package_name": "com.example.analyzer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "587486915073-ht46d3j02olcosb5b0o20hgjmkpem678.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC181QXtPB869aAHBDCWASaBo7eHyu8gIg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "587486915073-ht46d3j02olcosb5b0o20hgjmkpem678.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

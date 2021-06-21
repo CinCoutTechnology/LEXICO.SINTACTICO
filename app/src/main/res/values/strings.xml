@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Analyzer</string>
+
+    <string name="error">El campo no puede estar vacío</string>
+    <string name="identifiers">Identificadores</string>
+    <string name="numeric_constants">Constantes numéricas </string>
+    <string name="operators">Operadores</string>
+    <string name="assignment_symbol">Símbolo de asignación</string>
+    <string name="parenthesis">Paréntesis</string>
+    <string name="sentence_separator">Separador de sentencias</string>
+    <string name="block_indicators">principio - fin de bloque</string>
+    <string name="reserved_words">Palabras reservadas</string>
+
+</resources>
