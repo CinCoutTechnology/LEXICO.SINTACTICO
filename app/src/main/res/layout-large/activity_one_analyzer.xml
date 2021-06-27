@@ -87,7 +87,7 @@
                 android:layout_marginStart="@dimen/_20sdp"
                 android:text="Lexema"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="@dimen/_12sdp" />
 
             <TextView
                 android:id="@+id/pa"
@@ -97,7 +97,7 @@
                 android:layout_centerVertical="true"
                 android:text="Patrón"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="@dimen/_12sdp" />
 
             <TextView
                 android:id="@+id/Token"
@@ -107,9 +107,9 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/_20sdp"
-                android:text="Patrón"
+                android:text="Token"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="@dimen/_12sdp" />
 
         </RelativeLayout>
 

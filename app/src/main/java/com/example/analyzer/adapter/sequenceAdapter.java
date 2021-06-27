@@ -1,7 +1,7 @@
 package com.example.analyzer.adapter;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,42 +12,42 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.analyzer.R;
 import com.example.analyzer.model.modelAnalyze;
+import com.example.analyzer.model.tokensAnalyze;
 
 import java.util.ArrayList;
 
-public class analyzerAdapter extends RecyclerView.Adapter<analyzerAdapter.viewHolder> {
+public class sequenceAdapter extends RecyclerView.Adapter<sequenceAdapter.viewHolder> {
 
-    ArrayList<modelAnalyze> analyzes;
+    ArrayList<tokensAnalyze> analyzes;
+    int selectedPosition = -1;
 
-    public analyzerAdapter(ArrayList<modelAnalyze> analyzes) {
+    public sequenceAdapter(ArrayList<tokensAnalyze> analyzes) {
         this.analyzes = analyzes;
     }
-
-    int selectedPosition=-1;
 
     @NonNull
     @Override
     public viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new viewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_code, parent, false));
+                .inflate(R.layout.item_sect, parent, false));
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
 
-        modelAnalyze analyze = analyzes.get(position);
+        tokensAnalyze analyze = analyzes.get(position);
 
-        holder.text_lex.setText(analyze.getLex());
-        holder.text_pa.setText(analyze.getPat());
-        holder.text_tok.setText(analyze.getTok());
+        holder.tok.setText("<" + analyze.getToken() + ",");
+        holder.id.setText(analyze.getTds() + ">");
 
-        if(selectedPosition==position)
+        if (selectedPosition == position)
             holder.itemView.setBackgroundColor(Color.parseColor("#f6e8ea"));
         else
             holder.itemView.setBackgroundColor(Color.parseColor("#e4f2f3"));
 
         holder.itemView.setOnClickListener(v -> {
-            selectedPosition=position;
+            selectedPosition = position;
             notifyDataSetChanged();
 
         });
@@ -70,16 +70,14 @@ public class analyzerAdapter extends RecyclerView.Adapter<analyzerAdapter.viewHo
 
     static class viewHolder extends RecyclerView.ViewHolder {
 
-        TextView text_lex, text_tok, text_pa;
+        TextView tok, id;
 
         public viewHolder(@NonNull View itemView) {
             super(itemView);
-            text_lex = itemView.findViewById(R.id.text_lex);
-            text_tok = itemView.findViewById(R.id.text_tok);
-            text_pa = itemView.findViewById(R.id.text_pa);
+            id = itemView.findViewById(R.id.id);
+            tok = itemView.findViewById(R.id.tok);
+
         }
 
     }
-
-
 }

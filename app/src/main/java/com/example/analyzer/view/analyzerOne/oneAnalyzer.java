@@ -4,20 +4,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.analyzer.R;
 import com.example.analyzer.adapter.analyzerAdapter;
 import com.example.analyzer.model.modelAnalyze;
+import com.example.analyzer.presenter.lexicalAnalysisPresenter;
 import com.example.analyzer.utilities.Constants;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 public class oneAnalyzer extends AppCompatActivity {
 
@@ -25,24 +32,36 @@ public class oneAnalyzer extends AppCompatActivity {
     RecyclerView mRecyclerView;
     TextView text_analyze;
     EditText error_analyzer;
+    Button tokensView;
+    String code;
+    ArrayList<modelAnalyze> lexicon;
+    List<String> control;
+    private lexicalAnalysisPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_one_analyzer);
 
+        presenter = new lexicalAnalysisPresenter();
+
         input_text = findViewById(R.id.input_text);
         text_analyze = findViewById(R.id.text_analyze);
         text_analyze.setVisibility(View.GONE);
         error_analyzer = findViewById(R.id.error_analyzer);
         error_analyzer.setVisibility(View.GONE);
+        tokensView = findViewById(R.id.tokensView);
+        tokensView.setVisibility(View.GONE);
 
         findViewById(R.id.gooAnalyzer).setOnClickListener(v -> {
-            String code = input_text.getEditText().getText().toString().trim();
+            lexicon = new ArrayList<>();
+            control = new ArrayList<>();
+            code = Objects.requireNonNull(input_text.getEditText()).getText().toString().trim();
             if (!validate(code)) {
                 return;
             }
             analyzer(code);
+            tokensView.setVisibility(View.VISIBLE);
         });
 
         mRecyclerView = findViewById(R.id.recycler_id);
@@ -62,67 +81,108 @@ public class oneAnalyzer extends AppCompatActivity {
         }
     }
 
-    private void analyzer(String code) {
+    public void analyzer(String code) {
+
+        lexicon.clear();
 
         String an = code.replace(" ", "");
 
-        List<modelAnalyze> lexicon = new ArrayList<>();
-
+        List<String> TDS = new ArrayList<>();
         StringBuilder mistakes = new StringBuilder();
-        //M { R a; R b; c = a + b - 2 ; W c }
+
         for (int n = 0; n < an.length(); n++) {
             char cara = an.charAt(n);
-            //M
-            boolean i = Arrays.asList(Constants.identifiers).contains(String.valueOf(cara));
-            if (i) {
-                lexicon.add(new modelAnalyze(String.valueOf(cara), getString(R.string.identifiers)));
+
+            if (presenter.analyze(Constants.identifiers, String.valueOf(cara))) {
+                checkLexicon(cara, Constants.identifiersP, R.string.identifiersP);
+                addIndex(TDS, cara);
             }
 
-            boolean nc = Arrays.asList(Constants.numeric_constants).contains(String.valueOf(cara));
-            if (nc) {
-                lexicon.add(new modelAnalyze(String.valueOf(cara), getString(R.string.numeric_constants)));
+            if (presenter.analyze(Constants.numeric_constants, String.valueOf(cara))) {
+                checkLexicon(cara, Constants.digitP, R.string.digitP);
+                addIndex(TDS, cara);
             }
 
-            boolean o = Arrays.asList(Constants.operators).contains(String.valueOf(cara));
-            if (o) {
-                lexicon.add(new modelAnalyze(String.valueOf(cara), getString(R.string.operators)));
+            if (presenter.analyze(Constants.operators, String.valueOf(cara))) {
+                checkLexicon(cara, Constants.operatorsP, R.string.operatorsP);
+                addIndex(TDS, cara);
             }
 
-            boolean as = Arrays.asList(Constants.assignment_symbol).contains(String.valueOf(cara));
-            if (as) {
-                lexicon.add(new modelAnalyze(String.valueOf(cara), getString(R.string.assignment_symbol)));
+            if (presenter.analyze(Constants.assignment_symbol, String.valueOf(cara))) {
+                checkLexicon(cara, Constants.assignmentP, R.string.assignmentP);
             }
 
-            boolean par = Arrays.asList(Constants.parenthesis).contains(String.valueOf(cara));
-            if (par) {
-                lexicon.add(new modelAnalyze(String.valueOf(cara), getString(R.string.parenthesis)));
+            if (presenter.analyze(Constants.parenthesis, String.valueOf(cara))) {
+                checkLexicon(cara, Constants.groupersP, R.string.groupersP);
             }
 
-            boolean ss = Arrays.asList(Constants.sentence_separator).contains(String.valueOf(cara));
-            if (ss) {
-                lexicon.add(new modelAnalyze(String.valueOf(cara), getString(R.string.sentence_separator)));
+            if (presenter.analyze(Constants.sentence_separator, String.valueOf(cara))) {
+                checkLexicon(cara, Constants.separatorP, R.string.separatorP);
             }
 
-            boolean bi = Arrays.asList(Constants.block_indicators).contains(String.valueOf(cara));
-            if (bi) {
-                lexicon.add(new modelAnalyze(String.valueOf(cara), getString(R.string.block_indicators)));
+            if (presenter.analyze(Constants.block_indicators, String.valueOf(cara))) {
+                checkLexicon(cara, Constants.groupersP, R.string.groupersP);
             }
 
-            boolean rw = Arrays.asList(Constants.reserved_words).contains(String.valueOf(cara));
-            if (rw) {
-                lexicon.add(new modelAnalyze(String.valueOf(cara), getString(R.string.reserved_words)));
+            if (presenter.analyze(Constants.reserved_words, String.valueOf(cara))) {
+                if (checkL(String.valueOf(cara))) {
+                    control.add(String.valueOf(cara));
+                    lexicon.add(new modelAnalyze(String.valueOf(cara), String.valueOf(cara), String.valueOf(cara)));
+                } else {
+                    add(String.valueOf(cara), String.valueOf(cara));
+                }
             }
 
-            boolean error = Arrays.asList(Constants.error).contains(String.valueOf(cara));
-            if (!error) {
+            if (presenter.analyze(Constants.relations, String.valueOf(cara))) {
+                checkLexicon(cara, Constants.relationsP, R.string.relationsP);
+                addIndex(TDS, cara);
+            }
+
+            if (!presenter.analyze(Constants.error, String.valueOf(cara))) {
                 text_analyze.setVisibility(View.VISIBLE);
                 error_analyzer.setVisibility(View.VISIBLE);
                 mistakes.append(cara).append(" ");
             }
         }
-        error_analyzer.setText(mistakes.toString());
 
+        error_analyzer.setText(mistakes.toString());
         analyzerAdapter mAdapter = new analyzerAdapter(lexicon);
         mRecyclerView.setAdapter(mAdapter);
+        tokensView.setOnClickListener(v -> {
+            Intent intent = new Intent(oneAnalyzer.this, tokenSequence.class);
+            intent.putExtra("token", (Serializable) TDS);
+            intent.putExtra("code", code);
+            startActivity(intent);
+        });
+    }
+
+    private void addIndex(List<String> TDS, char cara) {
+        if (!TDS.contains(String.valueOf(cara))) {
+            TDS.add(String.valueOf(cara));
+        }
+    }
+
+    private void checkLexicon(char cara, String identifiersP, int p) {
+        if (checkL(identifiersP)) {
+            control.add(identifiersP);
+            lexicon.add(new modelAnalyze(String.valueOf(cara), identifiersP, getString(p)));
+        } else {
+            add(String.valueOf(cara), identifiersP);
+        }
+    }
+
+    boolean checkL(String s) {
+        Set<String> set = new HashSet<>(control);
+        return !set.contains(s);
+    }
+
+    void add(String lex, String pat) {
+        for (modelAnalyze a : lexicon) {
+            String d = a.getLex();
+            String pa = a.getPat();
+            if (pa.contains(pat) && !d.contains(lex)) {
+                a.setLex(d + "," + lex);
+            }
+        }
     }
 }

@@ -9,15 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Analyzer">
-        <activity
-            android:name=".view.analyzerTwo.twoAnalyzer"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.analyzerOne.oneAnalyzer"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".MainActivity"
-            android:screenOrientation="portrait">
+        <activity android:name=".view.analyzerOne.tokenSequence" />
+        <activity android:name=".view.analyzerTwo.twoAnalyzer" />
+        <activity android:name=".view.analyzerOne.oneAnalyzer" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

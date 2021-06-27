@@ -1,17 +1,21 @@
 package com.example.analyzer.model;
 
-public class modelAnalyze {
+import java.io.Serializable;
+
+public class modelAnalyze implements Serializable {
 
     String lex;
+    String pat;
     String tok;
 
-    public modelAnalyze(String lex, String tok) {
+    public modelAnalyze(String lex, String pat, String tok) {
         this.lex = lex;
+        this.pat = pat;
         this.tok = tok;
     }
 
-    public modelAnalyze() {
 
+    public modelAnalyze() {
     }
 
     public String getLex() {
@@ -22,6 +26,14 @@ public class modelAnalyze {
         this.lex = lex;
     }
 
+    public String getPat() {
+        return pat;
+    }
+
+    public void setPat(String pat) {
+        this.pat = pat;
+    }
+
     public String getTok() {
         return tok;
     }
@@ -29,4 +41,5 @@ public class modelAnalyze {
     public void setTok(String tok) {
         this.tok = tok;
     }
+
 }

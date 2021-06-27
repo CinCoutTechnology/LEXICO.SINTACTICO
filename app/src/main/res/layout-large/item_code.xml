@@ -6,40 +6,41 @@
 
     <TextView
         android:id="@+id/text_lex"
-        android:layout_width="@dimen/_70sdp"
+        android:layout_width="@dimen/_60sdp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:gravity="center"
-        android:text="L"
+        android:text="x, y , d, i , c"
         android:textColor="@color/black"
         android:textSize="@dimen/_12ssp" />
 
     <TextView
         android:id="@+id/text_pa"
-        android:layout_width="@dimen/_120sdp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="5dp"
+        android:layout_toStartOf="@+id/text_tok"
+        android:layout_toEndOf="@+id/text_lex"
         android:gravity="center"
-        android:text="P"
         android:textColor="@color/black"
         android:textSize="@dimen/_12sdp" />
 
     <TextView
         android:id="@+id/text_tok"
-        android:layout_width="@dimen/_70sdp"
+        android:layout_width="@dimen/_45sdp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_15sdp"
         android:gravity="center"
-        android:text="T"
+        android:text="TTT"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="@dimen/_15ssp" />

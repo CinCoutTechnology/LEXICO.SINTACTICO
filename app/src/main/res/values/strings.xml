@@ -2,13 +2,24 @@
     <string name="app_name">Analyzer</string>
 
     <string name="error">El campo no puede estar vacío</string>
-    <string name="identifiers">Identificadores</string>
-    <string name="numeric_constants">Constantes numéricas </string>
-    <string name="operators">Operadores</string>
-    <string name="assignment_symbol">Símbolo de asignación</string>
-    <string name="parenthesis">Paréntesis</string>
-    <string name="sentence_separator">Separador de sentencias</string>
-    <string name="block_indicators">principio - fin de bloque</string>
-    <string name="reserved_words">Palabras reservadas</string>
 
+    <string name="numeric_constants">NUM </string>
+    <string name="operators">OP</string>
+    <string name="relationship">REL</string>
+    <string name="assignment_symbol">ASIG</string>
+    <string name="parenthesis">Paren</string>
+    <string name="sentence_separator">Senten</string>
+    <string name="block_indicators">Agrup</string>
+    <string name="reserved_words">PalaReser</string>
+
+    <string name="groupersP">AGR</string>
+    <string name="identifiersP">ID</string>
+    <string name="relationsP">REL</string>
+    <string name="digitP">NUM</string>
+    <string name="separatorP">FIN</string>
+    <string name="assignmentP">ASIG</string>
+    <string name="trueFalse">BOOL</string>
+    <string name="operatorsP">OP</string>
+
+    number_of_grid_items
 </resources>
